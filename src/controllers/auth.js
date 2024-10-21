@@ -15,6 +15,8 @@ import { Session } from '../db/models/Session.js';
 import { User } from '../db/models/User.js';
 import { env } from '../utils/env.js';
 import { generateAuthUrl, validateCode } from '../utils/googleOAuth2.js';
+import { exec } from 'child_process';
+import { stderr, stdout } from 'node:process';
 
 export const registerUserController = async (req, res, next) => {
   const { name, email } = req.body;
@@ -200,4 +202,32 @@ export const confirmOAutController = async (req, res) => {
     message: 'Successfully logged in an user!',
     data: { accessToken: session.accessToken },
   });
+};
+
+export const webHookAuth = (req, res) => {
+  const signature = req.headers['x-hub-signature'];
+  const hash = webHookCheckSignature(req);
+
+  if (signature !== hash) {
+    return res.status(403).send('Forbidden');
+  }
+
+  const event = req.headers['x-github-event'];
+  if (event === 'push') {
+    exec('pm2 restart index', (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${error.message}`);
+        return res.status(500).send('Error restarting app');
+      }
+      if (stderr) {
+        console.error(`Error: ${stderr}`);
+        return res.status(500).send('Error restarting app');
+      }
+      console.log(`Exit: ${stdout}`);
+      return res.status(200).send('App restarted successfully');
+    });
+  } else {
+    console.log(`Event received: ${event}. No action needed.`);
+    return res.status(200).send('No action needed');
+  }
 };

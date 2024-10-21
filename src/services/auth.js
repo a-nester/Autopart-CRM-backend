@@ -71,3 +71,11 @@ export const requestResetToken = async (user) => {
     html,
   });
 };
+
+export const webHookCheckSignature = (req) => {
+  const hash = `sha1=${crypto
+    .createHmac('sha1', env('JWT_SECRET'))
+    .update(JSON.stringify(req.body))
+    .digest('hex')}`;
+  return hash;
+};
