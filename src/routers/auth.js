@@ -18,15 +18,12 @@ import {
   resetPasswordController,
   getOAuthURLController,
   confirmOAutController,
-  webHookAuth,
 } from '../controllers/auth.js';
 
 import '../utils/googleOAuth2.js';
 
 export const router = Router();
 const jsonParser = express.json();
-
-router.post('/webhook', ctrlWrapper(webHookAuth));
 
 router.post(
   '/register',
