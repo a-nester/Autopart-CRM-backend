@@ -5,7 +5,7 @@ import contactsRouter from '../routers/contacts.js';
 
 const router = Router();
 
-router.post('/webhook', webHookRouter);
+router.use('/webhook', webHookRouter);
 router.use('/auth', authRouter);
 router.use('/contacts', contactsRouter);
 
