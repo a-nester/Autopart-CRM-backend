@@ -8,6 +8,7 @@ import {
   registerUser,
   requestResetToken,
   setupSession,
+  webHookCheckSignature,
 } from '../services/auth.js';
 import { findUserByEmail } from '../services/auth.js';
 import { setupCookie } from '../utils/setupCookie.js';
@@ -16,7 +17,6 @@ import { User } from '../db/models/User.js';
 import { env } from '../utils/env.js';
 import { generateAuthUrl, validateCode } from '../utils/googleOAuth2.js';
 import { exec } from 'child_process';
-import { stderr, stdout } from 'node:process';
 
 export const registerUserController = async (req, res, next) => {
   const { name, email } = req.body;
