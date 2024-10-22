@@ -6,6 +6,6 @@ import { webHookAuth } from '../controllers/auth.js';
 export const router = Router();
 const jsonParser = express.json();
 
-router.post('/webhook', jsonParser, ctrlWrapper(webHookAuth));
+router.post('/', jsonParser, ctrlWrapper(webHookAuth));
 
 export default router;
