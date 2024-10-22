@@ -8,6 +8,8 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
 import { UPLOAD_DIR } from './constants/index.js';
+import { downloadScheduler } from './utils/downloadScheduler.js';
+import { downloadExcellFile } from './utils/downloadExcellFile.js';
 
 dotenv.config();
 const PORT = Number(env('PORT', 3000));
@@ -33,6 +35,10 @@ export const setupServer = () => {
   app.use('*', notFoundHandler);
 
   app.use(errorHandler);
+
+  downloadExcellFile();
+
+  app.use(downloadScheduler);
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
