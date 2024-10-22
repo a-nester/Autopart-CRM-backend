@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
+import crypto from 'crypto';
 
 import { Session } from '../db/models/Session.js';
 import { User } from '../db/models/User.js';
