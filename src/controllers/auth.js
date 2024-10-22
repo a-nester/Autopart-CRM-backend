@@ -214,20 +214,27 @@ export const webHookAuth = (req, res) => {
 
   const event = req.headers['x-github-event'];
   if (event === 'push') {
-    exec('pm2 restart index', (error, stdout, stderr) => {
+    exec('git pull origin main', (error, stdout, stderr) => {
       if (error) {
-        console.error(`Error: ${error.message}`);
-        return res.status(500).send('Error restarting app');
+        console.error(`Error pulling from git: ${error.message}`);
+        return res.status(500).send('Error pulling from git');
       }
       if (stderr) {
-        console.error(`Error: ${stderr}`);
-        return res.status(500).send('Error restarting app');
+        console.error(`Git stderr: ${stderr}`);
       }
-      console.log(`Exit: ${stdout}`);
-      return res.status(200).send('App restarted successfully');
+      console.log(`Git stdout: ${stdout}`);
+
+      exec('pm2 restart index', (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error restarting app: ${error.message}`);
+          return res.status(500).send('Error restarting app');
+        }
+        if (stderr) {
+          console.error(`PM2 stderr: ${stderr}`);
+        }
+        console.log(`PM2 stdout: ${stdout}`);
+        return res.status(200).send('App updated and restarted successfully');
+      });
     });
-  } else {
-    console.log(`Event received: ${event}. No action needed.`);
-    return res.status(200).send('No action needed');
   }
 };
