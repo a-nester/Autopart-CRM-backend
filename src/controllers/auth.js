@@ -205,6 +205,7 @@ export const confirmOAutController = async (req, res) => {
 };
 
 export const webHookAuth = (req, res) => {
+  console.log('Received headers!!!:', req.headers);
   const signature = req.headers['x-hub-signature'];
   const hash = webHookCheckSignature(req);
 
