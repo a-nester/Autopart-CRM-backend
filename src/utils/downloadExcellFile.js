@@ -3,6 +3,10 @@ import { env } from './env.js';
 import fs from 'fs';
 import path from 'path';
 import { simpleParser } from 'mailparser';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const downloadExcellFile = async () => {
   const imap = new Imap({
@@ -19,17 +23,16 @@ export const downloadExcellFile = async () => {
         if (err) throw err;
 
         const today = new Date();
-        const sinceDate = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate(),
-        );
+        const sinceDate = new Date(today.setHours(0, 0, 0, 0));
+        const formattedDate = sinceDate.toLocaleDateString('en-CA');
 
+        console.log('Since', formattedDate);
         imap.search(
           [
             ['FROM', 'diya.zbut28@gmail.com'],
-            ['SINCE', sinceDate.toISOString().split('T')[0]],
+            ['SINCE', formattedDate],
           ],
+
           (err, results) => {
             if (err) throw err;
             console.log('Search results:', results);
@@ -55,29 +58,26 @@ export const downloadExcellFile = async () => {
 
                     // Перевірка наявності вкладень
                     if (mail.attachments && mail.attachments.length > 0) {
-                      console.log('Has attachment');
-
                       mail.attachments.forEach((attachment) => {
                         console.log(
                           'Attachment filename:',
                           attachment.filename,
                         );
-                        // Шаблон назви файлу
-                        const filenamePattern =
-                          /^Прайс-лист_Нестеренко О.В. ФО-П\(Лебедка\)_\d{2}\.\d{2}\.\d{2}\.xlsx$/;
 
                         // Перевірка на тип файлу та шаблон назви
                         if (
                           attachment.filename.endsWith('.xlsx') &&
-                          filenamePattern.test(attachment.filename)
+                          attachment.filename.includes('Прайс-лист')
                         ) {
                           console.log('Has pattern');
 
                           const filePath = path.join(
                             __dirname,
-                            '../../uploads',
+                            '../../uploadPrice',
                             attachment.filename,
                           ); // Задаємо шлях для збереження файлу
+                          console.log('Path', filePath);
+
                           fs.writeFile(filePath, attachment.content, (err) => {
                             if (err) {
                               console.error('Error saving the file:', err);

@@ -4,7 +4,7 @@ import { validateBody } from '../middlewares/validateBody.js';
 import {
   confirmOAuthSchema,
   loginUserSchema,
-  registerUserSchema,
+  // registerUserSchema,
   requestResetEmailSchema,
   resetPasswordSchema,
 } from '../validation/user.js';
@@ -13,7 +13,7 @@ import {
   loginUserController,
   logoutUserController,
   refreshUserSessionController,
-  registerUserController,
+  // registerUserController,
   requestResetEmailController,
   resetPasswordController,
   getOAuthURLController,
@@ -25,12 +25,12 @@ import '../utils/googleOAuth2.js';
 export const router = Router();
 const jsonParser = express.json();
 
-router.post(
-  '/register',
-  jsonParser,
-  validateBody(registerUserSchema),
-  ctrlWrapper(registerUserController),
-);
+// router.post(
+//   '/register',
+//   jsonParser,
+//   validateBody(registerUserSchema),
+//   ctrlWrapper(registerUserController),
+// );
 
 router.post(
   '/login',
