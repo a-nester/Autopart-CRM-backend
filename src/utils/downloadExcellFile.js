@@ -26,7 +26,6 @@ export const downloadExcellFile = async () => {
         const sinceDate = new Date(today.setHours(0, 0, 0, 0));
         const formattedDate = sinceDate.toLocaleDateString('en-CA');
 
-        console.log('Since', formattedDate);
         imap.search(
           [
             ['FROM', 'diya.zbut28@gmail.com'],
