@@ -36,9 +36,9 @@ export const setupServer = () => {
 
   app.use(errorHandler);
 
-  downloadExcellFile();
-
-  app.use(downloadScheduler);
+  // downloadExcellFile();
+  downloadScheduler();
+  // app.use(downloadScheduler);
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
