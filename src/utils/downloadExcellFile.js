@@ -17,10 +17,13 @@ export const downloadExcellFile = async () => {
     tls: true,
   });
 
-  const download = () => {
+  return new Promise((resolve, reject) => {
     imap.once('ready', () => {
       imap.openBox('INBOX/_Дія+', false, (err) => {
-        if (err) throw err;
+        if (err) {
+          reject(err);
+          return;
+        }
 
         const today = new Date();
         const sinceDate = new Date(today.setHours(0, 0, 0, 0));
@@ -31,14 +34,16 @@ export const downloadExcellFile = async () => {
             ['FROM', 'diya.zbut28@gmail.com'],
             ['SINCE', formattedDate],
           ],
-
           (err, results) => {
-            if (err) throw err;
-            console.log('Search results:', results);
+            if (err) {
+              reject(err);
+              return;
+            }
 
             if (results.length === 0) {
               console.log('No new emails found.');
               imap.end();
+              resolve(null); // Повертаємо null, якщо файлів немає
               return;
             }
 
@@ -51,41 +56,36 @@ export const downloadExcellFile = async () => {
                 });
                 stream.on('end', () => {
                   simpleParser(buffer, (err, mail) => {
-                    if (err) throw err;
+                    if (err) {
+                      reject(err);
+                      return;
+                    }
 
-                    console.log('Subject: ' + mail.subject);
-
-                    // Перевірка наявності вкладень
                     if (mail.attachments && mail.attachments.length > 0) {
                       mail.attachments.forEach((attachment) => {
-                        console.log(
-                          'Attachment filename:',
-                          attachment.filename,
-                        );
-
-                        // Перевірка на тип файлу та шаблон назви
                         if (
                           attachment.filename.endsWith('.xlsx') &&
                           attachment.filename.includes('Прайс-лист')
                         ) {
-                          console.log('Has pattern');
-
                           const filePath = path.join(
                             __dirname,
                             '../../uploadPrice',
                             attachment.filename,
-                          ); // Задаємо шлях для збереження файлу
-                          console.log('Path', filePath);
+                          );
 
                           fs.writeFile(filePath, attachment.content, (err) => {
                             if (err) {
                               console.error('Error saving the file:', err);
+                              reject(err);
                             } else {
                               console.log('File saved:', filePath);
+                              resolve(filePath); // Повертаємо шлях до файлу
                             }
                           });
                         }
                       });
+                    } else {
+                      resolve(null); // Повертаємо null, якщо вкладень немає
                     }
                   });
                 });
@@ -93,7 +93,6 @@ export const downloadExcellFile = async () => {
             });
 
             f.once('end', () => {
-              console.log('Done fetching all messages!');
               imap.end();
             });
           },
@@ -103,6 +102,7 @@ export const downloadExcellFile = async () => {
 
     imap.once('error', (err) => {
       console.error(err);
+      reject(err);
     });
 
     imap.once('end', () => {
@@ -110,9 +110,7 @@ export const downloadExcellFile = async () => {
     });
 
     imap.connect();
-  };
-
-  download();
+  });
 };
 
 export default downloadExcellFile;

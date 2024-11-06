@@ -30,3 +30,10 @@ export const GOOGLE_OAUTH = {
   GOOGLE_AUTH_CLIENT_ID: 'GOOGLE_AUTH_CLIENT_ID',
   GOOGLE_AUTH_CLIENT_SECRET: 'GOOGLE_AUTH_CLIENT_SECRET',
 };
+
+export const PARSE_GROUPES_NAMES = {
+  GROUPE_01: {
+    name: ' Генератори Brevia',
+    groupe_id: 53399,
+  },
+};
