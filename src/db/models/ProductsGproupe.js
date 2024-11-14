@@ -10,6 +10,10 @@ export const ProductsGroupeSchema = new Schema(
       type: String,
       require: true,
     },
+    promGroupId: {
+      type: Number,
+      require: false,
+    },
   },
   {
     timestamps: true,

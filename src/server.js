@@ -9,6 +9,7 @@ import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
 import { UPLOAD_DIR } from './constants/index.js';
 import { downloadScheduler } from './utils/downloadScheduler.js';
+// import setPromProductsIdToDB from './utils/setPromProductsIdToDB.js';
 
 dotenv.config();
 const PORT = Number(env('PORT', 3000));

@@ -30,6 +30,14 @@ export const ProductSchema = new Schema(
       type: Number,
       require: true,
     },
+    promProductId: {
+      type: Number,
+      require: false,
+    },
+    external_id: {
+      type: String,
+      require: false,
+    },
   },
   {
     timestamps: true,

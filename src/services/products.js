@@ -13,5 +13,14 @@ export const createProduct = (productData) =>
 
 export const findAllProducts = () => Product.find({});
 
+export const findProductsByGroupeId = (groupId) =>
+  Product.find({ productGroupId: groupId });
+
 export const updateProductByCode = (code, updates) =>
   Product.findOneAndUpdate({ code }, updates, { new: true });
+
+export const updateProductByArticle = async (article, updates) => {
+  return await Product.findOneAndUpdate({ article }, updates, { new: true });
+};
+
+// /products/edit_by_external_id
