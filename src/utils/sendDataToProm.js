@@ -1,10 +1,8 @@
 import { findProductsByGroupeId } from '../services/products.js';
 import { editProductsById } from './api.js';
 
-export const sendDataToProm = async () => {
-  // const groupeId = { code: '53399' };
-  const groups = 53399;
-  const productsList = await findProductsByGroupeId(groups);
+export const getProductsFromDbByGroupeId = async (groupe) => {
+  const productsList = await findProductsByGroupeId(groupe);
   const editList = [];
   for (const product of productsList) {
     if (product.promProductId && product.quantity > 0) {
@@ -16,7 +14,18 @@ export const sendDataToProm = async () => {
       });
     }
   }
-  const response = await editProductsById(editList);
+  return editList;
+};
+
+export const sendDataToProm = async () => {
+  // const groupeId = { code: '53399' };
+  const groups = [53399];
+  const productListToProm = [];
+  for (const groupe of groups) {
+    const products = await getProductsFromDbByGroupeId(groupe);
+    productListToProm.push(products);
+  }
+  const response = await editProductsById(productListToProm);
   if (!response.error) {
     console.log('Successfully upload group`s changes to Prom', response);
   } else {
