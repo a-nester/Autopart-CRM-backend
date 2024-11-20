@@ -110,7 +110,7 @@ export const parseExcellFile = async (filePath) => {
       } else {
         if (Object.keys(updates).length > 0) {
           console.log('Zero quantity to update', updates);
-          updates.quantity = 0;
+          updates.quantity = null;
           const updated = await updateProductByCode(dbProduct._id, updates);
           console.log('Updated', updated);
         }
