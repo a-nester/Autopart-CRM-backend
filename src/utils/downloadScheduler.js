@@ -18,6 +18,7 @@ export const downloadScheduler = () => {
   });
 
   cron.schedule('*/59 * * * *', async () => {
+    // cron.schedule('59 1-23/2 * * *', async () => { // 59-та хвилина запуску, починаючи з 1 години і через кожні 2 години
     console.log('Running the job to download Excell files...');
     try {
       await setPromProductsIdToDB(53399);

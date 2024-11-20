@@ -81,8 +81,8 @@ export const parseExcellFile = async (filePath) => {
     for (const dbProduct of dbProducts) {
       const excellProduct = excellProducts[dbProduct.code];
 
+      const updates = {};
       if (excellProduct) {
-        const updates = {};
         updates.promPrice = Math.ceil(excellProduct.price * 41.65 * 1.875);
         if (dbProduct.article !== excellProduct.article) {
           console.log('Article not eaqual');
@@ -104,6 +104,13 @@ export const parseExcellFile = async (filePath) => {
         if (Object.keys(updates).length > 0) {
           console.log('Values to update', updates);
 
+          const updated = await updateProductByCode(dbProduct._id, updates);
+          console.log('Updated', updated);
+        }
+      } else {
+        if (Object.keys(updates).length > 0) {
+          console.log('Zero quantity to update', updates);
+          updates.quantity = 0;
           const updated = await updateProductByCode(dbProduct._id, updates);
           console.log('Updated', updated);
         }
