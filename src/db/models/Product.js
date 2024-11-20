@@ -38,6 +38,16 @@ export const ProductSchema = new Schema(
       type: String,
       require: false,
     },
+    promPrice: {
+      type: Number,
+      require: false,
+    },
+    promDiscount: {
+      type: { type: String, require: false },
+      value: { type: Number, require: false },
+      date_start: { type: String, require: false },
+      date_end: { type: String, require: false },
+    },
   },
   {
     timestamps: true,

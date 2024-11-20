@@ -11,6 +11,8 @@ export const getProductsFromDbByGroupeId = async (groupe) => {
         presence: 'available',
         quantity_in_stock:
           product.quantity === '+' ? 100 : Number(product.quantity),
+        price: product.promPrice,
+        discount: product.promDiscount,
       });
     }
   }
@@ -23,8 +25,10 @@ export const sendDataToProm = async () => {
   const productListToProm = [];
   for (const groupe of groups) {
     const products = await getProductsFromDbByGroupeId(groupe);
-    productListToProm.push(products);
+    if (products) productListToProm.push(...products);
   }
+  console.log('Send products to PROM:', productListToProm);
+
   const response = await editProductsById(productListToProm);
   if (!response.error) {
     console.log('Successfully upload group`s changes to Prom', response);
