@@ -6,7 +6,7 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { createTimerController } from '../controllers/timers.js';
 
 const router = Router();
-const jsonParser = express.ison();
+const jsonParser = express.json();
 
 router.post(
   '/',
