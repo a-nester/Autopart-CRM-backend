@@ -9,6 +9,6 @@ const router = Router();
 router.use('/webhook', webHookRouter);
 router.use('/auth', authRouter);
 router.use('/contacts', contactsRouter);
-// router.use('/timers', timersRouter);
+router.use('/timers', timersRouter);
 
 export default router;
