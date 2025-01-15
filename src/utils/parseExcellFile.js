@@ -78,44 +78,43 @@ export const parseExcellFile = async (filePath) => {
   try {
     const dbProducts = await findAllProducts();
 
-    for (const dbProduct of dbProducts) {
-      const excellProduct = excellProducts[dbProduct.code];
+    await Promise.all(
+      dbProducts.map(async (dbProduct) => {
+        const excellProduct = excellProducts[dbProduct.code];
+        const updates = {};
 
-      const updates = {};
-      if (excellProduct) {
-        updates.promPrice = Math.ceil(excellProduct.price * 41.65 * 1.875);
-        if (dbProduct.article !== excellProduct.article) {
-          console.log('Article not eaqual');
-          updates.article = excellProduct.article;
+        if (excellProduct) {
+          if (dbProduct.article !== excellProduct.article) {
+            console.log('Article not equal');
+            updates.article = excellProduct.article;
+          }
+          if (dbProduct.name !== excellProduct.name) {
+            console.log('Name not equal');
+            updates.name = excellProduct.name;
+          }
+          if (dbProduct.price !== excellProduct.price) {
+            console.log('Price not equal');
+            updates.price = excellProduct.price;
+            updates.promPrice = Math.ceil(excellProduct.price * 41.65 * 1.875);
+          }
+          if (dbProduct.quantity !== excellProduct.quantity) {
+            console.log('Quantity not equal');
+            updates.quantity = excellProduct.quantity;
+          }
+        } else {
+          console.log(
+            `Product article: ${dbProduct.article} missing in excell!`,
+          );
+          updates.quantity = null;
         }
-        if (dbProduct.name !== excellProduct.name) {
-          console.log('Name not eaqual');
-          updates.name = excellProduct.name;
-        }
-        if (dbProduct.price !== excellProduct.price) {
-          console.log('Price not eaqual');
 
-          updates.price = excellProduct.price;
-        }
-        if (dbProduct.quantity !== excellProduct.quantity) {
-          console.log('Quantity not eaqual');
-          updates.quantity = excellProduct.quantity;
-        }
         if (Object.keys(updates).length > 0) {
           console.log('Values to update', updates);
-
           const updated = await updateProductByCode(dbProduct._id, updates);
           console.log('Updated', updated);
         }
-      } else {
-        if (Object.keys(updates).length > 0) {
-          console.log('Zero quantity to update', updates);
-          updates.quantity = null;
-          const updated = await updateProductByCode(dbProduct._id, updates);
-          console.log('Updated', updated);
-        }
-      }
-    }
+      }),
+    );
   } catch (error) {
     console.log('Error', error);
   }
