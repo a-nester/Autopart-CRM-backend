@@ -21,6 +21,8 @@ export const createTimerController = async (req, res) => {
     );
 
     console.log('existingTimer', existingTimer);
+    console.log('requestTimerShop', discountTimer.shop);
+    console.log('existingTimerShop', existingTimer.shop);
 
     if (existingTimer && discountTimer.shop === existingTimer.shop) {
       const updatedDiscountTimer = await upsertDiscountTimer(
