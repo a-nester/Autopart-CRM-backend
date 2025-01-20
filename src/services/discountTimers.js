@@ -1,5 +1,10 @@
 import { DiscountTimerCollection } from '../db/models/DiscountTimer.js';
 
+export const getAllDiscountTimersByShop = async (shop) => {
+  const discountTimers = await DiscountTimerCollection.find({ shop });
+  return discountTimers;
+};
+
 export const getDiscountTimerByProductId = async (productId) => {
   const discountTimer = await DiscountTimerCollection.findOne({ productId });
   return discountTimer;

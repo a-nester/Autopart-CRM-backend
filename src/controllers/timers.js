@@ -1,12 +1,15 @@
 import {
   createDiscountTimer,
+  getAllDiscountTimersByShop,
   getDiscountTimerByProductId,
   upsertDiscountTimer,
 } from '../services/discountTimers.js';
+import { getFormattedDateWithOffset } from '../utils/formatDate.js';
+import { editProductsByShop } from '../utils/api.js';
 
 export const createTimerController = async (req, res) => {
   try {
-    console.log('Request body', req.body);
+    // console.log('Request body', req.body);
     const discountTimer = {
       shop: req.body.shop,
       productId: req.body.productId,
@@ -33,7 +36,7 @@ export const createTimerController = async (req, res) => {
       });
     }
 
-    console.log('newTimer');
+    // console.log('newTimer');
 
     const createdDiscountTimer = await createDiscountTimer(discountTimer);
 
@@ -51,4 +54,38 @@ export const createTimerController = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+export const setDiscountsToProm = async () => {
+  const shops = ['Avtoklan', 'AutoAx', 'iDoAuto', 'ToAuto'];
+  const results = [];
+
+  for (const shop of shops) {
+    try {
+      const timers = await getAllDiscountTimersByShop(shop);
+      if (timers.length === 0) {
+        console.log(`No timers found for shop ${shop}`);
+        results.push({ shop, message: 'No timers found' });
+        continue; // пропускаємо магазин без таймерів
+      }
+
+      const timersToSend = timers.map((timer) => ({
+        id: timer.id,
+        discount: {
+          value: timer.dayDiscount,
+          type: timer.dayDiscountType,
+          date_start: getFormattedDateWithOffset(),
+          date_end: getFormattedDateWithOffset(3),
+        },
+      }));
+
+      const response = await editProductsByShop(shop, timersToSend);
+      results.push({ shop, response });
+    } catch (error) {
+      console.error(`Error processing shop ${shop}`, error);
+      results.push({ shop, error: error.message });
+    }
+  }
+
+  return results;
 };

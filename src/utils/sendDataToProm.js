@@ -37,4 +37,6 @@ export const sendDataToProm = async () => {
   }
 };
 
-export default sendDataToProm;
+// export default sendDataToProm;
+
+// export const setDiscountTimersToPromByShop = (shop, discountTimers) => {};

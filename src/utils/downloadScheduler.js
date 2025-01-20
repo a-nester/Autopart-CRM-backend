@@ -3,6 +3,7 @@ import { downloadExcellFile } from './downloadExcellFile.js';
 import parseExcellFile from './parseExcellFile.js';
 import { sendDataToProm } from '../utils/sendDataToProm.js';
 import { setPromProductsIdToDB } from './setPromProductsIdToDB.js';
+import { setDiscountsToProm } from '../controllers/timers.js';
 
 export const downloadScheduler = () => {
   cron.schedule('10 10 * * *', async () => {
@@ -25,6 +26,15 @@ export const downloadScheduler = () => {
       await sendDataToProm();
     } catch (error) {
       console.error('Error during send data to prom...:', error);
+    }
+  });
+
+  cron.schedule('45 8 * * 1-5', async () => {
+    console.log('Running the job to seе Day Discounts');
+    try {
+      await setDiscountsToProm();
+    } catch (error) {
+      console.error('Error during seting Day Discount:', error);
     }
   });
 };
