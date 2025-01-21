@@ -29,9 +29,19 @@ export const downloadScheduler = () => {
     }
   });
 
-  cron.schedule('46 23 * * 1-5', async () => {
+  cron.schedule('55 8 * * 1-5', async () => {
     console.log('Running the job to seе Day Discounts');
     const period = 'day';
+    try {
+      await setDiscountsToProm(period);
+    } catch (error) {
+      console.error('Error during seting Day Discount:', error);
+    }
+  });
+
+  cron.schedule('00 18 * * 1-5', async () => {
+    console.log('Running the job to seе Day Discounts');
+    const period = 'night';
     try {
       await setDiscountsToProm(period);
     } catch (error) {
