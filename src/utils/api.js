@@ -9,7 +9,7 @@ import { env } from './env.js';
 // const token = env('PROM_TOKEN');
 
 const PROM_SHOPS = {
-  Avtoklan: env('AVTOKLAN_PROM_TOKEN'),
+  AvtoKlan: env('AVTOKLAN_PROM_TOKEN'),
   AutoAx: env('AUTOAX_PROM_TOKEN'),
   iDoAuto: env('IDOAUTO_PROM_TOKEN'),
   ToAuto: env('TOAVTO_PROM_TOKEN'),
@@ -49,6 +49,8 @@ export const editProductsByShop = async (shop, productsList) => {
   setToken(shop);
   try {
     const response = await PromAPI.post('/products/edit', productsList);
+    console.log('Edit produtcs response', response);
+
     return response.data;
   } catch (error) {
     return error.response ? error.response.data : error.message;

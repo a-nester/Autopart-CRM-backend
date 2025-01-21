@@ -56,28 +56,44 @@ export const createTimerController = async (req, res) => {
   }
 };
 
-export const setDiscountsToProm = async () => {
-  const shops = ['Avtoklan', 'AutoAx', 'iDoAuto', 'ToAuto'];
+export const setDiscountsToProm = async (period) => {
+  const shops = ['AvtoKlan', 'AutoAx', 'iDoAuto', 'ToAuto'];
   const results = [];
+  // const PERIOD = { day: dayDiscount };
 
   for (const shop of shops) {
     try {
       const timers = await getAllDiscountTimersByShop(shop);
+
       if (timers.length === 0) {
         console.log(`No timers found for shop ${shop}`);
         results.push({ shop, message: 'No timers found' });
         continue; // пропускаємо магазин без таймерів
       }
 
-      const timersToSend = timers.map((timer) => ({
-        id: timer.id,
-        discount: {
-          value: timer.dayDiscount,
-          type: timer.dayDiscountType,
-          date_start: getFormattedDateWithOffset(),
-          date_end: getFormattedDateWithOffset(3),
-        },
-      }));
+      const timersToSend = timers.map((timer) => {
+        const PERIOD_VALUE = {
+          day: timer.dayDiscount,
+          night: timer.nightDiscount,
+        };
+        const PERIOD_TYPE = {
+          day: timer.dayDiscountType,
+          night: timer.nightDiscountType,
+        };
+        return {
+          id: timer.productId,
+          // presence: 'available',
+          // quantity_in_stock: 10,
+          // price: 2008,
+          discount: {
+            value: PERIOD_VALUE[period],
+            type: PERIOD_TYPE[period],
+            date_start: getFormattedDateWithOffset(),
+            date_end: getFormattedDateWithOffset(3),
+          },
+        };
+      });
+      console.log('timersToSend', timersToSend);
 
       const response = await editProductsByShop(shop, timersToSend);
       results.push({ shop, response });
@@ -89,3 +105,10 @@ export const setDiscountsToProm = async () => {
 
   return results;
 };
+
+// id: product.promProductId,
+//         presence: 'available',
+//         quantity_in_stock:
+//           product.quantity === '+' ? 100 : Number(product.quantity),
+//         price: product.promPrice,
+//         discount: product.promDiscount
