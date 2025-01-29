@@ -21,6 +21,7 @@ export const registerUser = async (userData) => {
 
   return await User.create({
     ...userData,
+    role: 'user',
     password: encryptedPassword,
   });
 };
