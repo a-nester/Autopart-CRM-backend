@@ -7,9 +7,19 @@ import {
 import { getFormattedDateWithOffset } from '../utils/formatDate.js';
 import { editProductsByShop } from '../utils/api.js';
 
+export const getAllTimersController = async (req, res) => {
+  const { shop } = req.query;
+  const timers = await getAllDiscountTimersByShop(shop);
+
+  return res.status(200).json({
+    status: 200,
+    message: 'Discount timers successfully find',
+    data: timers,
+  });
+};
+
 export const createTimerController = async (req, res) => {
   try {
-    // console.log('Request body', req.body);
     const discountTimer = {
       shop: req.body.shop,
       productId: req.body.productId,
@@ -35,8 +45,6 @@ export const createTimerController = async (req, res) => {
         data: updatedDiscountTimer,
       });
     }
-
-    // console.log('newTimer');
 
     const createdDiscountTimer = await createDiscountTimer(discountTimer);
 
