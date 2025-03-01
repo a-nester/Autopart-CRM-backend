@@ -6,7 +6,7 @@ export const getAllTrips = async ({
   page = 1,
   perPage = 10,
   sortOrder = SORT_ORDER.ASC,
-  sortBy = 'unloadDate',
+  sortBy = 'loadDate',
   filter = {},
   company,
 }) => {
