@@ -1,12 +1,12 @@
 import { SORT_ORDER } from '../constants/index.js';
-import { TripCollection } from '../db/models/Transport.js';
+import { TripCollection } from '../db/models/transport.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const getAllTrips = async ({
   page = 1,
   perPage = 10,
   sortOrder = SORT_ORDER.ASC,
-  sortBy = '_id',
+  sortBy = 'unloadDate',
   filter = {},
   company,
 }) => {

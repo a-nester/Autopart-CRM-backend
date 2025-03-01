@@ -19,7 +19,7 @@ export const TripSchema = new Schema(
       required: true,
     },
     loadDate: {
-      type: String,
+      type: Number,
       required: false,
     },
     unloadingPlace: {
@@ -27,7 +27,7 @@ export const TripSchema = new Schema(
       required: true,
     },
     unloadDate: {
-      type: String,
+      type: Number,
       required: false,
     },
     rangeTo: {
