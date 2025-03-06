@@ -1,4 +1,5 @@
 import { SORT_ORDER } from '../constants/index.js';
+import { CustomersCollection } from '../db/models/customer.js';
 import { TripCollection } from '../db/models/transport.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
@@ -43,4 +44,15 @@ export const getAllTrips = async ({
 export const createTrip = async (payload) => {
   const trip = await TripCollection.create(payload);
   return trip;
+};
+
+export const createCustomer = async (payload) => {
+  const customer = await CustomersCollection.create(payload);
+  return customer;
+};
+
+export const getAllCustomers = async ({ company }) => {
+  const customers = await CustomersCollection.find({ company });
+
+  return customers;
 };

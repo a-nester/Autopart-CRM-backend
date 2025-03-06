@@ -16,3 +16,10 @@ export const createTripSchema = Joi.object({
   dispetcher_fee: Joi.number().integer().min(1).max(9999).required(),
   dispetcher_Currency: Joi.string().min(3).max(30).required(),
 });
+
+export const createCustomerSchema = Joi.object({
+  name: Joi.string().min(3).max(50).required(),
+  company: Joi.string().min(3).max(50),
+  phone: Joi.string().min(3).max(50),
+  email: Joi.string().min(3).max(50),
+});
