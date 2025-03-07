@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export const createTripSchema = Joi.object({
-  id: Joi.string().min(3).max(20).required(),
+  id: Joi.string().min(3).max(20),
   driver: Joi.string().min(3).max(20).required(),
   truck: Joi.string().min(3).max(20).required(),
   loadingPlace: Joi.string().min(3).max(30).required(),
@@ -13,6 +13,7 @@ export const createTripSchema = Joi.object({
   price: Joi.number().integer().min(1).max(999999).required(),
   currency: Joi.string().min(3).max(30).required(),
   payment_Form: Joi.string().min(3).max(30).required(),
+  dispetcher_id: Joi.string().min(3).max(30).required(),
   dispetcher_fee: Joi.number().integer().min(1).max(9999).required(),
   dispetcher_Currency: Joi.string().min(3).max(30).required(),
 });

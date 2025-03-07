@@ -4,7 +4,7 @@ export const TripSchema = new Schema(
   {
     id: {
       type: String,
-      required: true,
+      required: false,
     },
     driver: {
       type: String,
@@ -49,6 +49,10 @@ export const TripSchema = new Schema(
     payment_Form: {
       type: String,
       required: true,
+    },
+    dispetcher_id: {
+      type: String,
+      require: true,
     },
     dispetcher_fee: {
       type: Number,
