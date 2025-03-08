@@ -1,9 +1,28 @@
+import createHttpError from 'http-errors';
 import {
   createCustomer,
   createTrip,
   getAllCustomers,
   getAllTrips,
+  getTripById,
 } from '../services/transport.js';
+
+export const getTripByIdController = async (req, res) => {
+  const { tripId } = req.params;
+
+  const trip = await getTripById(tripId);
+
+  console.log('ID', trip);
+  if (!trip) {
+    return createHttpError(404, 'Trip not found');
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully found trip with id ${tripId}!`,
+    data: trip,
+  });
+};
 
 export const getTripsController = async (req, res) => {
   const trips = await getAllTrips(req.query);

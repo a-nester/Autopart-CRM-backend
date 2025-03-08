@@ -10,14 +10,18 @@ import {
   createCustomerController,
   createTripController,
   getCustomersController,
+  getTripByIdController,
   getTripsController,
 } from '../controllers/transport.js';
+import { isValidId } from '../middlewares/isValidId.js';
 
 const router = Router();
 
 const jsonParser = express.json();
 
 router.get('/', getTripsController);
+
+router.get('/:tripId', isValidId, ctrlWrapper(getTripByIdController));
 
 router.post(
   '/',

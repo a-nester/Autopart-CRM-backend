@@ -56,3 +56,9 @@ export const getAllCustomers = async ({ company }) => {
 
   return customers;
 };
+
+export const getTripById = async (id) => {
+  const trip = await TripCollection.findById(id);
+
+  return trip;
+};
