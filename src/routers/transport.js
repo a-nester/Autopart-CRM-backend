@@ -5,6 +5,7 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   createCustomerSchema,
   createTripSchema,
+  updateTripSchema,
 } from '../validation/transport.js';
 import {
   createCustomerController,
@@ -12,6 +13,7 @@ import {
   getCustomersController,
   getTripByIdController,
   getTripsController,
+  patchTripController,
 } from '../controllers/transport.js';
 import { isValidId } from '../middlewares/isValidId.js';
 
@@ -20,8 +22,6 @@ const router = Router();
 const jsonParser = express.json();
 
 router.get('/', getTripsController);
-
-router.get('/:tripId', isValidId, ctrlWrapper(getTripByIdController));
 
 router.post(
   '/',
@@ -39,4 +39,12 @@ router.post(
 
 router.get('/customers', getCustomersController);
 
+router.get('/:tripId', isValidId, ctrlWrapper(getTripByIdController));
+
+router.patch(
+  '/:tripId',
+  isValidId,
+  validateBody(updateTripSchema),
+  ctrlWrapper(patchTripController),
+);
 export default router;

@@ -5,6 +5,7 @@ import {
   getAllCustomers,
   getAllTrips,
   getTripById,
+  upsertTrip,
 } from '../services/transport.js';
 
 export const getTripByIdController = async (req, res) => {
@@ -44,6 +45,26 @@ export const createTripController = async (req, res) => {
     status: 201,
     message: 'Trip successfully created!',
     data: createdTrip,
+  });
+};
+
+export const patchTripController = async (req, res, next) => {
+  const { tripId } = req.params;
+
+  console.log('TRIP_ID', tripId);
+
+  const result = await upsertTrip(tripId, {
+    ...req.body,
+  });
+
+  if (!result) {
+    next(createHttpError(404, 'Trip not found!'));
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: 'Trip successfully patched!',
+    data: result.trip,
   });
 };
 

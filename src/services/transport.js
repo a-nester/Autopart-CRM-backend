@@ -62,3 +62,24 @@ export const getTripById = async (id) => {
 
   return trip;
 };
+
+export const upsertTrip = async (id, payload, options = {}) => {
+  const rawResult = await TripCollection.findOneAndUpdate(
+    { _id: id },
+    payload,
+    {
+      new: true,
+      includeResultMetadata: true,
+      ...options,
+    },
+  );
+
+  if (!rawResult || !rawResult.value) {
+    return null;
+  }
+
+  return {
+    trip: rawResult.value,
+    isNew: Boolean(rawResult?.lastErrorObject?.upserted),
+  };
+};

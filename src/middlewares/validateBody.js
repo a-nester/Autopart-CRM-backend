@@ -13,6 +13,8 @@ export const validateBody = (schema) => async (req, res, next) => {
     const error = createHttpError(400, 'Bad request', {
       errors: err.details,
     });
+    console.log('Validation error', err);
+
     next(error);
   }
 };

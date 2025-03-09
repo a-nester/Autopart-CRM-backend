@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export const createTripSchema = Joi.object({
-  id: Joi.string().min(3).max(20),
+  // _id: Joi.string().min(3).max(30),
   driver: Joi.string().min(3).max(20).required(),
   truck: Joi.string().min(3).max(20).required(),
   loadingPlace: Joi.string().min(3).max(30).required(),
@@ -16,6 +16,7 @@ export const createTripSchema = Joi.object({
   dispetcher_id: Joi.string().min(3).max(30).required(),
   dispetcher_fee: Joi.number().integer().min(1).max(9999).required(),
   dispetcher_Currency: Joi.string().min(3).max(30).required(),
+  weight: Joi.number().min(2).max(25000).required(),
 });
 
 export const createCustomerSchema = Joi.object({
@@ -23,4 +24,31 @@ export const createCustomerSchema = Joi.object({
   company: Joi.string().min(3).max(50),
   phone: Joi.string().min(3).max(50),
   email: Joi.string().min(3).max(50),
+});
+
+// export const updateContactSchema = Joi.object({
+//   name: Joi.string().min(3).max(20),
+//   phoneNumber: Joi.string().min(9).max(12),
+//   email: Joi.string().email(),
+//   isFavourite: Joi.boolean(),
+//   contactType: Joi.string().valid('work', 'home', 'personal'),
+// });
+
+export const updateTripSchema = Joi.object({
+  // _id: Joi.string().min(3).max(20),
+  driver: Joi.string().min(3).max(20),
+  truck: Joi.string().min(3).max(20),
+  loadingPlace: Joi.string().min(3).max(30),
+  loadDate: Joi.number().min(3).max(99999999999999),
+  unloadingPlace: Joi.string().min(3).max(30),
+  unloadDate: Joi.number().min(3).max(99999999999999),
+  rangeTo: Joi.number().integer().min(1).max(99999),
+  range: Joi.number().integer().min(1).max(99999),
+  price: Joi.number().integer().min(1).max(999999),
+  currency: Joi.string().min(3).max(30),
+  payment_Form: Joi.string().min(3).max(30),
+  dispetcher_id: Joi.string().min(3).max(30),
+  dispetcher_fee: Joi.number().integer().min(1).max(9999),
+  dispetcher_Currency: Joi.string().min(3).max(30),
+  weight: Joi.number().min(2).max(25000),
 });

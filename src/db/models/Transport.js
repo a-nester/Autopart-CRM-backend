@@ -2,10 +2,6 @@ import { model, Schema } from 'mongoose';
 
 export const TripSchema = new Schema(
   {
-    id: {
-      type: String,
-      required: false,
-    },
     driver: {
       type: String,
       required: true,
@@ -61,6 +57,10 @@ export const TripSchema = new Schema(
     dispetcher_Currency: {
       type: String,
       required: false,
+    },
+    weight: {
+      type: Number,
+      required: true,
     },
   },
   {
