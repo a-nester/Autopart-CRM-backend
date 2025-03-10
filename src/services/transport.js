@@ -6,7 +6,7 @@ import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 export const getAllTrips = async ({
   page = 1,
   perPage = 10,
-  sortOrder = SORT_ORDER.ASC,
+  sortOrder = SORT_ORDER.DESC,
   sortBy = 'loadDate',
   filter = {},
   company,
