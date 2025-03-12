@@ -3,13 +3,16 @@ import express from 'express';
 import { validateBody } from '../middlewares/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
+  createCostSchema,
   createCustomerSchema,
   createTripSchema,
   updateTripSchema,
 } from '../validation/transport.js';
 import {
+  createCostController,
   createCustomerController,
   createTripController,
+  getCostsController,
   getCustomersController,
   getTripByIdController,
   getTripsController,
@@ -38,6 +41,15 @@ router.post(
 );
 
 router.get('/customers', getCustomersController);
+
+router.get('/costs', getCostsController);
+
+router.post(
+  '/cost',
+  jsonParser,
+  validateBody(createCostSchema),
+  ctrlWrapper(createCostController),
+);
 
 router.get('/:tripId', isValidId, ctrlWrapper(getTripByIdController));
 

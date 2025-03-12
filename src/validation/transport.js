@@ -19,21 +19,6 @@ export const createTripSchema = Joi.object({
   weight: Joi.number().min(2).max(25000).required(),
 });
 
-export const createCustomerSchema = Joi.object({
-  name: Joi.string().min(3).max(50).required(),
-  company: Joi.string().min(3).max(50),
-  phone: Joi.string().min(3).max(50),
-  email: Joi.string().min(3).max(50),
-});
-
-// export const updateContactSchema = Joi.object({
-//   name: Joi.string().min(3).max(20),
-//   phoneNumber: Joi.string().min(9).max(12),
-//   email: Joi.string().email(),
-//   isFavourite: Joi.boolean(),
-//   contactType: Joi.string().valid('work', 'home', 'personal'),
-// });
-
 export const updateTripSchema = Joi.object({
   // _id: Joi.string().min(3).max(20),
   driver: Joi.string().min(3).max(20),
@@ -51,4 +36,24 @@ export const updateTripSchema = Joi.object({
   dispetcher_fee: Joi.number().integer().min(1).max(9999),
   dispetcher_Currency: Joi.string().min(3).max(30),
   weight: Joi.number().min(2).max(25000),
+});
+
+export const createCustomerSchema = Joi.object({
+  name: Joi.string().min(3).max(50).required(),
+  company: Joi.string().min(3).max(50),
+  phone: Joi.string().min(3).max(50),
+  email: Joi.string().min(3).max(50),
+});
+
+export const createCostSchema = Joi.object({
+  name: Joi.string().min(3).max(50).required(),
+  date: Joi.number().min(3).max(99999999999999).required(),
+  odometr: Joi.number().min(3).max(99999999999999),
+  costType: Joi.string().min(3).max(20).required(),
+  price: Joi.number().min(1).max(99999999999999).required(),
+  currency: Joi.string().min(3).max(20).required(),
+  companyId: Joi.string().min(3).max(20).required(),
+  truck: Joi.string().min(3).max(20),
+  driver: Joi.string().min(3).max(20),
+  trip: Joi.string().min(3).max(20),
 });

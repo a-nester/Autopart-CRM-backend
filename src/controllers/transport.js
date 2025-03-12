@@ -1,7 +1,9 @@
 import createHttpError from 'http-errors';
 import {
+  createCost,
   createCustomer,
   createTrip,
+  getAllCosts,
   getAllCustomers,
   getAllTrips,
   getTripById,
@@ -87,5 +89,27 @@ export const getCustomersController = async (req, res) => {
     status: 200,
     message: 'Customers successfully find!',
     data: customers,
+  });
+};
+
+export const createCostController = async (req, res) => {
+  const cost = req.body;
+
+  const createdCost = await createCost(cost);
+
+  res.status(201).json({
+    status: 201,
+    message: 'Cost successfully created',
+    data: createdCost,
+  });
+};
+
+export const getCostsController = async (req, res) => {
+  const costs = await getAllCosts(req.query);
+
+  res.status(200).json({
+    status: 200,
+    message: 'Costs successfully found!',
+    data: costs,
   });
 };
