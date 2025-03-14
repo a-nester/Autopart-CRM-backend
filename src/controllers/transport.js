@@ -96,6 +96,7 @@ export const createCostController = async (req, res) => {
   const cost = req.body;
 
   const createdCost = await createCost(cost);
+  console.log('createdCost Data', createdCost);
 
   res.status(201).json({
     status: 201,

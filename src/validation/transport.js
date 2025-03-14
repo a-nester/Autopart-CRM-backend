@@ -52,8 +52,8 @@ export const createCostSchema = Joi.object({
   costType: Joi.string().min(3).max(20).required(),
   price: Joi.number().min(1).max(99999999999999).required(),
   currency: Joi.string().min(3).max(20).required(),
-  companyId: Joi.string().min(3).max(20).required(),
+  companyId: Joi.string().min(3).max(20),
   truck: Joi.string().min(3).max(20),
   driver: Joi.string().min(3).max(20),
-  trip: Joi.string().min(3).max(20),
+  tripId: Joi.string().min(3).max(30),
 });

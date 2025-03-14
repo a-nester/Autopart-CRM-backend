@@ -87,6 +87,7 @@ export const upsertTrip = async (id, payload, options = {}) => {
 
 export const createCost = async (payload) => {
   const cost = await CostsCollection.create(payload);
+
   return cost;
 };
 
@@ -100,7 +101,7 @@ export const getAllCosts = async ({
   const limit = perPage;
   const skip = perPage * (page - 1);
 
-  const costsQuery = await CostsCollection.find();
+  const costsQuery = CostsCollection.find();
 
   if (filter.trip) {
     costsQuery.where('trip').equals(filter.trip);

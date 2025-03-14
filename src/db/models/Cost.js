@@ -15,7 +15,7 @@ export const CostSchema = new Schema(
       required: false,
     },
     costType: {
-      type: Number,
+      type: String,
       required: false,
     },
     price: {
@@ -38,7 +38,7 @@ export const CostSchema = new Schema(
       type: String,
       required: false,
     },
-    trip: {
+    tripId: {
       type: String,
       required: false,
     },
