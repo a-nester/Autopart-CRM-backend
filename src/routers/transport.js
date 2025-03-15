@@ -12,6 +12,7 @@ import {
   createCostController,
   createCustomerController,
   createTripController,
+  deleteCostController,
   getCostsController,
   getCustomersController,
   getTripByIdController,
@@ -52,6 +53,8 @@ router.post(
 );
 
 router.get('/:tripId', isValidId, ctrlWrapper(getTripByIdController));
+
+router.delete('/cost/:costId', isValidId, ctrlWrapper(deleteCostController));
 
 router.patch(
   '/:tripId',

@@ -3,6 +3,7 @@ import {
   createCost,
   createCustomer,
   createTrip,
+  deleteCost,
   getAllCosts,
   getAllCustomers,
   getAllTrips,
@@ -113,4 +114,17 @@ export const getCostsController = async (req, res) => {
     message: 'Costs successfully found!',
     data: costs,
   });
+};
+
+export const deleteCostController = async (req, res, next) => {
+  const { costId } = req.params;
+
+  const cost = await deleteCost(costId);
+
+  if (!cost) {
+    next(createHttpError(404, 'Cost not found!'));
+    return;
+  }
+
+  res.status(204).send('Successfully deleted');
 };

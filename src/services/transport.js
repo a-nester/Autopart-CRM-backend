@@ -103,6 +103,9 @@ export const getAllCosts = async ({
 
   const costsQuery = CostsCollection.find();
 
+  if (filter._id) {
+    costsQuery.where('tripId').equals(filter._id);
+  }
   if (filter.trip) {
     costsQuery.where('trip').equals(filter.trip);
   }
@@ -146,4 +149,11 @@ export const getAllCosts = async ({
     data: costs,
     ...paginationData,
   };
+};
+
+export const deleteCost = async (costId) => {
+  const cost = await CostsCollection.findOneAndDelete({
+    _id: costId,
+  });
+  return cost;
 };
