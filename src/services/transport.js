@@ -106,6 +106,9 @@ export const getAllCosts = async ({
   if (filter._id) {
     costsQuery.where('tripId').equals(filter._id);
   }
+  if (filter.costType) {
+    costsQuery.where('costType').equals(filter.costType);
+  }
   if (filter.trip) {
     costsQuery.where('trip').equals(filter.trip);
   }
