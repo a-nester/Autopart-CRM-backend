@@ -1,7 +1,7 @@
-import { getAllGroupes } from '../services/storm.js';
+import { getAllGroups } from '../services/storm.js';
 
-export const getGroupesController = async (req, res) => {
-  const groupes = await getAllGroupes(req.query);
+export const getGroupsController = async (req, res) => {
+  const groupes = await getAllGroups(req.query);
 
   res.status(200).json({
     status: 200,

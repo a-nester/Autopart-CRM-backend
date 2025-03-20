@@ -2,7 +2,7 @@ import { SORT_ORDER } from '../constants.js';
 import { ProductsGroupe } from '../db/models/ProductsGproupe.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
-export const getAllGroupes = async ({
+export const getAllGroups = async ({
   page = 1,
   perPage = 100,
   sortOrder = SORT_ORDER.DESC,
