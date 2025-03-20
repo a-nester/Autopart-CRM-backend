@@ -4,7 +4,7 @@ import authRouter from '../routers/auth.js';
 import contactsRouter from '../routers/contacts.js';
 import timersRouter from '../routers/timers.js';
 import transportRouter from '../routers/transport.js';
-import { stormRouter } from '../routers/storm.js';
+import stormRouter from '../routers/storm.js';
 
 const router = Router();
 

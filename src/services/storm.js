@@ -1,4 +1,4 @@
-import { SORT_ORDER } from '../constants.js';
+import { SORT_ORDER } from '../constants/index.js';
 import { ProductsGroupe } from '../db/models/ProductsGproupe.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
