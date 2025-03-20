@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { type } from 'os';
 
 export const ProductsGroupeSchema = new Schema(
   {
@@ -11,6 +12,10 @@ export const ProductsGroupeSchema = new Schema(
       require: true,
     },
     promGroupId: {
+      type: Number,
+      require: false,
+    },
+    parentGroupeId: {
       type: Number,
       require: false,
     },

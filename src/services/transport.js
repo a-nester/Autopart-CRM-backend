@@ -128,11 +128,6 @@ export const getAllCosts = async ({
       if (filter.date.$gte) dateFilter.$gte = new Date(filter.date.$gte);
       if (filter.date.$lte) dateFilter.$lte = new Date(filter.date.$lte);
       costsQuery.where('date').gte(dateFilter.$gte).lte(dateFilter.$lte);
-
-      // getAllCosts({ filter: { date: '2024-03-01' } }); // Точна дата
-      // getAllCosts({
-      //   filter: { date: { $gte: '2024-03-01', $lte: '2024-03-09' } },
-      // }); // Діапазон дат
     }
   }
 
