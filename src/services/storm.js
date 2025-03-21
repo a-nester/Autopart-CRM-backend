@@ -12,7 +12,7 @@ export const getAllGroups = async ({
   const limit = perPage;
   const skip = perPage * (page - 1);
 
-  const groupesQuery = await ProductsGroupe.find();
+  const groupesQuery = ProductsGroupe.find();
 
   if (filter.name) {
     groupesQuery.where('name').equals(filter.name);
