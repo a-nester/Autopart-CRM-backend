@@ -27,7 +27,7 @@ export const PromAPI = axios.create({
 
 export const getProductsByGroupeId = async (groupeId) => {
   try {
-    setToken('Avtoklan');
+    setToken('AvtoKlan');
     const response = await PromAPI.get(`/products/list?group_id=${groupeId}`);
     return response.data;
   } catch (error) {
@@ -37,7 +37,7 @@ export const getProductsByGroupeId = async (groupeId) => {
 
 export const editProductsById = async (productsList) => {
   try {
-    setToken('Avtoklan');
+    setToken('AvtoKlan');
     const response = await PromAPI.post('/products/edit', productsList);
     return response.data;
   } catch (error) {

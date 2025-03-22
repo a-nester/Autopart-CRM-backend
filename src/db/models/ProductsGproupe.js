@@ -1,5 +1,4 @@
 import { model, Schema } from 'mongoose';
-import { type } from 'os';
 
 export const ProductsGroupeSchema = new Schema(
   {

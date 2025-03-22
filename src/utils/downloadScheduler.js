@@ -21,11 +21,16 @@ export const downloadScheduler = () => {
   cron.schedule('*/59 * * * *', async () => {
     // cron.schedule('59 1-23/2 * * *', async () => { // 59-та хвилина запуску, починаючи з 1 години і через кожні 2 години
     console.log('Running the job to send data to prom...');
-    try {
-      await setPromProductsIdToDB(53399);
-      await sendDataToProm();
-    } catch (error) {
-      console.error('Error during send data to prom...:', error);
+    // const groups = [53399, 19836];
+    const groups = [53399];
+
+    for (const group of groups) {
+      try {
+        await setPromProductsIdToDB(group);
+        await sendDataToProm(group);
+      } catch (error) {
+        console.error('Error during send data to prom...:', error);
+      }
     }
   });
 

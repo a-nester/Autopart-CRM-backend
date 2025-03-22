@@ -19,9 +19,9 @@ export const getProductsFromDbByGroupeId = async (groupe) => {
   return editList;
 };
 
-export const sendDataToProm = async () => {
+export const sendDataToProm = async (code) => {
   // const groupeId = { code: '53399' };
-  const groups = [53399];
+  const groups = [code];
   const productListToProm = [];
   for (const groupe of groups) {
     const products = await getProductsFromDbByGroupeId(groupe);

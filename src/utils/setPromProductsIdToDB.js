@@ -7,6 +7,9 @@ import { getProductsByGroupeId } from './api.js';
 export const setPromProductsIdToDB = async (groupeId) => {
   const group = await findGroupeByCode(groupeId);
   const response = await getProductsByGroupeId(group.promGroupId);
+
+  console.log('!!!GROUP', group);
+
   if (!response.error) {
     for (const product of response.products) {
       const result = await updateProductByArticle(product.sku, {
