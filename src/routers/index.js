@@ -5,6 +5,7 @@ import contactsRouter from '../routers/contacts.js';
 import timersRouter from '../routers/timers.js';
 import transportRouter from '../routers/transport.js';
 import stormRouter from '../routers/storm.js';
+import settingsRouter from '../routers/settings.js';
 
 const router = Router();
 
@@ -13,6 +14,7 @@ router.use('/auth', authRouter);
 router.use('/contacts', contactsRouter);
 router.use('/timers', timersRouter);
 router.use('/storm', stormRouter);
+router.use('/settings', settingsRouter);
 router.use('/transport', transportRouter);
 
 export default router;

@@ -21,6 +21,7 @@ export const downloadScheduler = () => {
   cron.schedule('*/59 * * * *', async () => {
     // cron.schedule('59 1-23/2 * * *', async () => { // 59-та хвилина запуску, починаючи з 1 години і через кожні 2 години
     console.log('Running the job to send data to prom...');
+    // const shops = [];
     // const groups = [53399, 19836];
     const groups = [53399];
 
