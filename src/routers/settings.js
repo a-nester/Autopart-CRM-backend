@@ -14,10 +14,10 @@ const jsonParser = express.json();
 
 // router.use(authenticate);
 
-router.get('/shops/', ctrlWrapper(getAllShopsController));
+router.get('/shops', ctrlWrapper(getAllShopsController));
 
 router.post(
-  '/shops/',
+  '/shops',
   jsonParser,
   validateBody(createStoreSchema),
   ctrlWrapper(createShopController),
