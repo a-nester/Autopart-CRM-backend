@@ -28,3 +28,4 @@ export const getAllShopsController = async (req, res, next) => {
     data: shops,
   });
 };
+// test
