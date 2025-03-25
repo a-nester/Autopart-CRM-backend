@@ -3,8 +3,36 @@ import { ProductsGroupe } from '../db/models/ProductsGproupe.js';
 
 export const findGroupeByCode = (code) => ProductsGroupe.findOne({ code });
 
-export const createProductsGroupe = (data) =>
-  ProductsGroupe.create({ ...data });
+export const createProductsGroupe = async (data) =>
+  await ProductsGroupe.create({ ...data });
+
+export const upsertProductsGroupe = async (code, updates) => {
+  console.log('UPDATES', updates);
+
+  const shopKey = updates.promShop; // Ключ магазину (наприклад, "AvtoKlan")
+  const promGroupValue = updates[shopKey]; // Значення, яке ми додаємо
+
+  if (!shopKey) {
+    throw new Error('promShop is undefined');
+  }
+
+  console.log('🔍 Updating with:', {
+    [`promGroup.${shopKey}`]: promGroupValue,
+  });
+
+  const updatedGroup = await ProductsGroupe.findOneAndUpdate(
+    { code },
+    {
+      $set: {
+        [`promGroup.${shopKey}`]: promGroupValue, // ✅ Правильний шлях
+      },
+    },
+    { new: true, upsert: true },
+  );
+
+  console.log('✅ Updated GROUP:', updatedGroup);
+  return updatedGroup;
+};
 
 export const findProductByCode = (code) => Product.findOne({ code });
 

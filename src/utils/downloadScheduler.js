@@ -23,14 +23,17 @@ export const downloadScheduler = () => {
     console.log('Running the job to send data to prom...');
     // const shops = [];
     // const groups = [53399, 19836];
-    const groups = [53399];
-
-    for (const group of groups) {
-      try {
-        await setPromProductsIdToDB(group);
-        await sendDataToProm(group);
-      } catch (error) {
-        console.error('Error during send data to prom...:', error);
+    const groups = [19836];
+    // const stores = ['AvtoKlan', 'AutoAx', 'iDoAuto', 'ToAuto'];
+    const stores = ['AvtoKlan'];
+    for (const store of stores) {
+      for (const group of groups) {
+        try {
+          await setPromProductsIdToDB(group, store);
+        } catch (error) {
+          console.error('Error during send data to prom...:', error);
+        }
+        await sendDataToProm(groups, store);
       }
     }
   });

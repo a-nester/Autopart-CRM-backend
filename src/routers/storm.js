@@ -1,10 +1,23 @@
 import { Router } from 'express';
-// import express from 'express';
-import { getGroupsController } from '../controllers/storm.js';
+import express from 'express';
+import {
+  getGroupsController,
+  updateGroupController,
+} from '../controllers/storm.js';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { validateBody } from '../middlewares/validateBody.js';
+import { updateGroupSchema } from '../validation/storm.js';
 
 const router = Router();
-// const jsonParser = express.json();
+const jsonParser = express.json();
 
 router.get('/groups/', getGroupsController);
+
+router.patch(
+  '/groups/',
+  jsonParser,
+  validateBody(updateGroupSchema),
+  ctrlWrapper(updateGroupController),
+);
 
 export default router;

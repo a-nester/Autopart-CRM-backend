@@ -31,8 +31,8 @@ export const ProductSchema = new Schema(
       require: true,
     },
     promProductId: {
-      type: Number,
-      require: false,
+      type: Map,
+      of: Number,
     },
     external_id: {
       type: String,
@@ -43,10 +43,13 @@ export const ProductSchema = new Schema(
       require: false,
     },
     promDiscount: {
-      type: { type: String, require: false },
-      value: { type: Number, require: false },
-      date_start: { type: String, require: false },
-      date_end: { type: String, require: false },
+      type: Map,
+      of: new Schema({
+        type: { type: String, require: false },
+        value: { type: Number, require: false },
+        date_start: { type: String, require: false },
+        date_end: { type: String, require: false },
+      }),
     },
   },
   {

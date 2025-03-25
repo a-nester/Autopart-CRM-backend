@@ -15,7 +15,7 @@ const PROM_SHOPS = {
   ToAuto: env('TOAVTO_PROM_TOKEN'),
 };
 
-// 'Avtoklan', 'AutoAx', 'iDoAuto', 'ToAuto';
+// ['AvtoKlan', 'AutoAx', 'iDoAuto', 'ToAuto'];
 const setToken = (shop) => {
   const token = PROM_SHOPS[shop];
   PromAPI.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -25,19 +25,26 @@ export const PromAPI = axios.create({
   baseURL: API_URLs.PROM_BASE_URL,
 });
 
-export const getProductsByGroupeId = async (groupeId) => {
+export const getProductsByGroupeId = async (groupeId, store) => {
   try {
-    setToken('AvtoKlan');
-    const response = await PromAPI.get(`/products/list?group_id=${groupeId}`);
+    setToken(store);
+    const response = await PromAPI.get(`/products/list?group_id=${groupeId}`, {
+      params: { limit: 100 },
+    });
+    console.log(
+      `/products/list?group_id=${groupeId}`,
+      response.data.products.map((elem) => ({ art: elem.sku, id: elem.id })),
+    );
+
     return response.data;
   } catch (error) {
     return error.response ? error.response.data : error.message;
   }
 };
 
-export const editProductsById = async (productsList) => {
+export const editProductsById = async (productsList, store) => {
   try {
-    setToken('AvtoKlan');
+    setToken(store);
     const response = await PromAPI.post('/products/edit', productsList);
     return response.data;
   } catch (error) {

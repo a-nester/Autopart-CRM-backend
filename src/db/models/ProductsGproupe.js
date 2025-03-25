@@ -10,9 +10,14 @@ export const ProductsGroupeSchema = new Schema(
       type: String,
       require: true,
     },
-    promGroupId: {
-      type: Number,
-      require: false,
+    promGroup: {
+      type: Map,
+      of: new Schema({
+        id: Number,
+        name: String,
+        discountValue: Number,
+        discountType: String,
+      }),
     },
     parentGroupeId: {
       type: Number,
