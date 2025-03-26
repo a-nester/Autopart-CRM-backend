@@ -4,6 +4,7 @@ import parseExcellFile from './parseExcellFile.js';
 import { sendDataToProm } from '../utils/sendDataToProm.js';
 import { setPromProductsIdToDB } from './setPromProductsIdToDB.js';
 import { setDiscountsToProm } from '../controllers/timers.js';
+import { findAllGroups } from '../services/products.js';
 
 export const downloadScheduler = () => {
   cron.schedule('10 10 * * *', async () => {
@@ -21,20 +22,27 @@ export const downloadScheduler = () => {
   cron.schedule('*/59 * * * *', async () => {
     // cron.schedule('59 1-23/2 * * *', async () => { // 59-та хвилина запуску, починаючи з 1 години і через кожні 2 години
     console.log('Running the job to send data to prom...');
-    // const shops = [];
-    // const groups = [53399, 19836];
-    const groups = [19836];
-    // const stores = ['AvtoKlan', 'AutoAx', 'iDoAuto', 'ToAuto'];
-    const stores = ['AvtoKlan'];
-    for (const store of stores) {
-      for (const group of groups) {
-        try {
-          await setPromProductsIdToDB(group, store);
-        } catch (error) {
-          console.error('Error during send data to prom...:', error);
+
+    try {
+      const stores = ['AvtoKlan', 'AutoAx', 'iDoAuto', 'ToAuto'];
+      for (const store of stores) {
+        const newGroups = await findAllGroups();
+        const groups = newGroups
+          .filter((elem) => elem.promGroup !== undefined)
+          .map((elem) => elem.code);
+
+        console.log('New Groups', groups);
+        for (const group of groups) {
+          try {
+            await setPromProductsIdToDB(group, store);
+          } catch (error) {
+            console.error('Error during send data to prom...:', error);
+          }
+          await sendDataToProm(groups, store);
         }
-        await sendDataToProm(groups, store);
       }
+    } catch (error) {
+      console.error('Error during find product groups!', error);
     }
   });
 

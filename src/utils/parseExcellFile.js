@@ -95,6 +95,9 @@ export const parseExcellFile = async (filePath) => {
           if (dbProduct.price !== excellProduct.price) {
             console.log('Price not equal');
             updates.price = excellProduct.price;
+            // updates.promPrice = Math.ceil(excellProduct.price * 41.65 * 1.875);
+          }
+          if (excellProduct.price) {
             updates.promPrice = Math.ceil(excellProduct.price * 41.65 * 1.875);
           }
           if (dbProduct.quantity !== excellProduct.quantity) {

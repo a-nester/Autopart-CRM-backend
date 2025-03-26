@@ -3,6 +3,8 @@ import { ProductsGroupe } from '../db/models/ProductsGproupe.js';
 
 export const findGroupeByCode = (code) => ProductsGroupe.findOne({ code });
 
+export const findAllGroups = () => ProductsGroupe.find();
+
 export const createProductsGroupe = async (data) =>
   await ProductsGroupe.create({ ...data });
 

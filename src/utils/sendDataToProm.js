@@ -5,10 +5,6 @@ export const getProductsFromDbByGroupeId = async (groupe, store) => {
   console.log('getProductsFromDbByGroupeId', groupe, store);
 
   const productsList = await findProductsByGroupeId(groupe);
-  // console.log(
-  //   'Пошук в БД',
-  //   productsList.map((elem) => elem.code),
-  // );
 
   const editList = [];
   for (const product of productsList) {

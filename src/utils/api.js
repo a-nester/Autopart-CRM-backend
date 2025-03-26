@@ -31,10 +31,10 @@ export const getProductsByGroupeId = async (groupeId, store) => {
     const response = await PromAPI.get(`/products/list?group_id=${groupeId}`, {
       params: { limit: 100 },
     });
-    console.log(
-      `/products/list?group_id=${groupeId}`,
-      response.data.products.map((elem) => ({ art: elem.sku, id: elem.id })),
-    );
+    // console.log(
+    //   `/products/list?group_id=${groupeId}`,
+    //   response.data.products.map((elem) => ({ art: elem.sku, id: elem.id })),
+    // );
 
     return response.data;
   } catch (error) {
@@ -56,7 +56,7 @@ export const editProductsByShop = async (shop, productsList) => {
   setToken(shop);
   try {
     const response = await PromAPI.post('/products/edit', productsList);
-    console.log('Edit produtcs response', response);
+    // console.log('Edit produtcs response', response);
 
     return response.data;
   } catch (error) {
