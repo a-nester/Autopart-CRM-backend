@@ -5,6 +5,7 @@ import { sendDataToProm } from '../utils/sendDataToProm.js';
 import { setPromProductsIdToDB } from './setPromProductsIdToDB.js';
 import { setDiscountsToProm } from '../controllers/timers.js';
 import { findAllGroups } from '../services/products.js';
+// import { parsePage } from './parserURL.js';
 
 export const downloadScheduler = () => {
   cron.schedule('10 10 * * *', async () => {
@@ -25,13 +26,15 @@ export const downloadScheduler = () => {
 
     try {
       const stores = ['AvtoKlan', 'AutoAx', 'iDoAuto', 'ToAuto'];
+      // const stores = ['AvtoKlan'];
+
       for (const store of stores) {
         const newGroups = await findAllGroups();
         const groups = newGroups
-          .filter((elem) => elem.promGroup !== undefined)
+          .filter((elem) => elem.promGroup && elem.promGroup.get(store)) // Перевіряємо існування promGroup і його властивості store
           .map((elem) => elem.code);
 
-        console.log('New Groups', groups);
+        // console.log('New Groups', groups);
         for (const group of groups) {
           try {
             await setPromProductsIdToDB(group, store);
@@ -65,4 +68,16 @@ export const downloadScheduler = () => {
       console.error('Error during seting Day Discount:', error);
     }
   });
+
+  // cron.schedule('*/3 * * * *', async () => {
+  //   // const url = 'https://storm-group.eu/ru/products?category_id=316&page=1';
+  //   const groups = [52840];
+  //   const store = 'AvtoKlan';
+
+  //   try {
+  //     parsePage(groups, store);
+  //   } catch (error) {
+  //     console.error('Error during parse', error);
+  //   }
+  // });
 };

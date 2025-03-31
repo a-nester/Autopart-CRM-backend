@@ -43,6 +43,8 @@ export const getProductsByGroupeId = async (groupeId, store) => {
 };
 
 export const editProductsById = async (productsList, store) => {
+  console.log('productsList!!!', productsList);
+
   try {
     setToken(store);
     const response = await PromAPI.post('/products/edit', productsList);

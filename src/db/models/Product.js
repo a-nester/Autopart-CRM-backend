@@ -38,6 +38,10 @@ export const ProductSchema = new Schema(
       type: String,
       require: false,
     },
+    promTitleRu: {
+      type: String,
+      require: false,
+    },
     promPrice: {
       type: Number,
       require: false,
@@ -50,6 +54,19 @@ export const ProductSchema = new Schema(
         date_start: { type: String, require: false },
         date_end: { type: String, require: false },
       }),
+    },
+    imageUrls: {
+      type: [String],
+      require: false,
+      default: [],
+    },
+    originalUrl: {
+      type: String,
+      require: false,
+    },
+    description_ru: {
+      type: String,
+      require: false,
     },
   },
   {

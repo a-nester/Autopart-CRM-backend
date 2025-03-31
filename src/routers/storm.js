@@ -2,6 +2,7 @@ import { Router } from 'express';
 import express from 'express';
 import {
   getGroupsController,
+  setParsedDataToPromController,
   updateGroupController,
 } from '../controllers/storm.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
@@ -12,6 +13,8 @@ const router = Router();
 const jsonParser = express.json();
 
 router.get('/groups/', getGroupsController);
+
+router.post('/setData/', jsonParser, setParsedDataToPromController);
 
 router.patch(
   '/groups/',
