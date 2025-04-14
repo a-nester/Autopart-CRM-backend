@@ -44,7 +44,7 @@ export const getProductsByGroupeId = async (groupeId, store) => {
 };
 
 export const editProductsById = async (productsList, store) => {
-  console.log('productsList!!!', productsList);
+  // console.log('productsList!!!', productsList);
 
   const BATCH_SIZE = 100;
   const results = [];
