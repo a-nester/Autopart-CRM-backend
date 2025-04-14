@@ -9,7 +9,7 @@ import { findAllGroups } from '../services/products.js';
 
 export const downloadScheduler = () => {
   cron.schedule('10 10 * * *', async () => {
-    // cron.schedule('*/10 * * * *', async () => {
+    // cron.schedule('*/5 * * * *', async () => {
     console.log('Running the job to download Excell files...');
     try {
       const filePath = await downloadExcellFile();
@@ -34,7 +34,7 @@ export const downloadScheduler = () => {
           .filter((elem) => elem.promGroup && elem.promGroup.get(store)) // Перевіряємо існування promGroup і його властивості store
           .map((elem) => elem.code);
 
-        // console.log('New Groups', groups);
+        // console.log('New Groups1', groups);
         for (const group of groups) {
           try {
             await setPromProductsIdToDB(group, store);

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_URLs } from '../constants/index.js';
 import { env } from './env.js';
+import fs from 'fs/promises';
 
 // const config = {
 //     BASE_URL:
@@ -45,13 +46,29 @@ export const getProductsByGroupeId = async (groupeId, store) => {
 export const editProductsById = async (productsList, store) => {
   console.log('productsList!!!', productsList);
 
-  try {
-    setToken(store);
-    const response = await PromAPI.post('/products/edit', productsList);
-    return response.data;
-  } catch (error) {
-    return error.response ? error.response.data : error.message;
+  const BATCH_SIZE = 100;
+  const results = [];
+
+  setToken(store);
+
+  for (let i = 0; i < productsList.length; i += BATCH_SIZE) {
+    const batch = productsList.slice(i, i + BATCH_SIZE);
+    // const batchNumber = Math.floor(i / BATCH_SIZE) + 1;
+
+    try {
+      const response = await PromAPI.post('/products/edit', batch);
+      results.push(response.data);
+
+      // логування у success.log
+      // const logMessage = `✅ Batch ${batchNumber}: Success\n${JSON.stringify(
+      //   response.data,
+      // )}\n\n`;
+      // await fs.appendFile('success.log', logMessage, 'utf-8');
+    } catch (error) {
+      return error.response ? error.response.data : error.message;
+    }
   }
+  return results;
 };
 
 export const editProductsByShop = async (shop, productsList) => {

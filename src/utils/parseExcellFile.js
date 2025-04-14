@@ -103,6 +103,8 @@ export const parseExcellFile = async (filePath) => {
           if (dbProduct.quantity !== excellProduct.quantity) {
             console.log('Quantity not equal');
             updates.quantity = excellProduct.quantity;
+          } else {
+            updates.quantity = null;
           }
         } else {
           console.log(
