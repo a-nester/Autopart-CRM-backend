@@ -54,9 +54,9 @@ export const parseExcellFile = async (filePath) => {
           code: row[1],
           article: row[2],
           name: row[3],
-          price: parseFloat(row[6]),
-          currency: row[7],
-          quantity: row[8] ? row[8].toString() : '0',
+          price: parseFloat(row[7]),
+          currency: row[8],
+          quantity: row[9] ? row[9].toString() : '0',
           productGroupId: groupId,
         };
 
@@ -64,8 +64,26 @@ export const parseExcellFile = async (filePath) => {
           // пошук і перевірка чи існує товар в БД. Якщо не існує - пишем в Бд
           const product = await findProductByCode(excellProducts[row[1]].code);
           if (!product) {
-            const newProduct = await createProduct(excellProducts[row[1]]);
-            console.log(`Product added: ${newProduct.name}`);
+            try {
+              const newProduct = await createProduct(excellProducts[row[1]]);
+              console.log(`Product added: ${newProduct.name}`);
+              if (newProduct.article === '22170') {
+                console.log(
+                  '🚀 Продукт з article "22170" успішно доданий в базу даних:',
+                  newProduct,
+                );
+              }
+            } catch (err) {
+              console.error('Помилка при створенні продукту:');
+              console.error('Обʼєкт продукту:', excellProducts[row[1]]);
+              console.error('Текст помилки:', err.message);
+
+              if (excellProducts[row[1]].article === '22170') {
+                console.error(
+                  '⚠️ Продукт з article "22170" НЕ був доданий через помилку.',
+                );
+              }
+            }
           }
         } catch (error) {
           console.error('Error while saving product:', error);

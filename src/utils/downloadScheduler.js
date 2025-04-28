@@ -8,8 +8,9 @@ import { findAllGroups } from '../services/products.js';
 // import { parsePage } from './parserURL.js';
 
 export const downloadScheduler = () => {
-  cron.schedule('10 10 * * *', async () => {
-    // cron.schedule('*/5 * * * *', async () => {
+  // cron.schedule('10 10 * * *', async () => {
+  cron.schedule('1-59/10 * * * *', async () => {
+    // з першої хвилини і кожні 10хв
     console.log('Running the job to download Excell files...');
     try {
       const filePath = await downloadExcellFile();
@@ -20,8 +21,9 @@ export const downloadScheduler = () => {
     }
   });
 
-  cron.schedule('*/59 * * * *', async () => {
-    // cron.schedule('59 1-23/2 * * *', async () => { // 59-та хвилина запуску, починаючи з 1 години і через кожні 2 години
+  // cron.schedule('*/59 * * * *', async () => {
+  cron.schedule('59 1-23/3 * * *', async () => {
+    // 59-та хвилина запуску, починаючи з 1 години і через кожні 3 години
     console.log('Running the job to send data to prom...');
 
     try {
