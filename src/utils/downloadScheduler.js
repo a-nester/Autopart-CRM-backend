@@ -8,8 +8,8 @@ import { findAllGroups } from '../services/products.js';
 // import { parsePage } from './parserURL.js';
 
 export const downloadScheduler = () => {
-  // cron.schedule('10 10 * * *', async () => {
-  cron.schedule('1-59/10 * * * *', async () => {
+  cron.schedule('10 10 * * *', async () => {
+    // cron.schedule('1-59/10 * * * *', async () => {
     // з першої хвилини і кожні 10хв
     console.log('Running the job to download Excell files...');
     try {
